@@ -5,12 +5,15 @@
         {% if user.is_authenticated %}
             <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">
                 {% include './icons/pencil-fill.svg' %}
+                <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><button type="button" class="btn btn-danger">Delete</button></a>
             </a>
         {% endif %}
         {% if post.published_date %}
-            <time class="date">
+            <div class="date">
                 {{ post.published_date }}
-            </time>
+            </div>
+        {% else %}
+            <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
         {% endif %}
         <h2>{{ post.title }}</h2>
         <p>{{ post.text|linebreaksbr }}</p>
