@@ -30,3 +30,6 @@ $RECYCLE.BIN/
 .vscode/
 .history/
 *.code-workspace
+
+# old style hide env settings on local_settings.py
+local_settings.py
