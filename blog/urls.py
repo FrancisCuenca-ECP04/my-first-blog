@@ -1,6 +1,9 @@
 from django.urls import path
 from django.urls.resolvers import URLPattern
 from  . import views
+from blog.api.views import post
+
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     path('',views.post_list,name='post_list'),
@@ -13,4 +16,10 @@ urlpatterns = [
     path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
     path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
+
+    #api
+    path('api/post/', post.post_list.as_view()),
+    path('api/post/<int:pk>/', post.post_detail.as_view()),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
