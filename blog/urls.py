@@ -21,6 +21,8 @@ urlpatterns = [
     #api
     path('api/token/', views.obtain_auth_token),
     path('api/post/', post_list.posts.as_view()),
+    path('api/draft/', post_list.drafts.as_view()),
+    path('api/post/<int:pk>/', post_list.post_detail.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
