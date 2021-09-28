@@ -1,7 +1,7 @@
 from django.urls import path
 from django.urls.resolvers import URLPattern
 from  . import blogviews
-from blog.api.views import post_list
+from blog.api.views import post_list,comment
 
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken import views
@@ -22,7 +22,9 @@ urlpatterns = [
     path('api/token/', views.obtain_auth_token),
     path('api/post/', post_list.posts.as_view()),
     path('api/draft/', post_list.drafts.as_view()),
-    path('api/post/<int:pk>/', post_list.post_detail.as_view())
+    path('api/post/<int:pk>/', post_list.post_detail.as_view()),
+    path('api/comment/', comment.comments.as_view()),
+    path('api/comment/<int:pk>/',comment.comment_detail.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
