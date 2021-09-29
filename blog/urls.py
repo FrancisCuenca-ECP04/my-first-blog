@@ -1,7 +1,7 @@
 from django.urls import path
 from django.urls.resolvers import URLPattern
 from  . import blogviews
-from blog.api.views import post_list,comment
+from blog.api.views import post_list,comment,token
 
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken import views
@@ -19,7 +19,7 @@ urlpatterns = [
     path('comment/<int:pk>/remove/', blogviews.comment_remove, name='comment_remove'),
 
     #api
-    path('api/token/', views.obtain_auth_token),
+    path('api/token/', token.CustomAuthToken.as_view()),
     path('api/post/', post_list.posts.as_view()),
     path('api/draft/', post_list.drafts.as_view()),
     path('api/post/<int:pk>/', post_list.post_detail.as_view()),
