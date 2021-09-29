@@ -22,6 +22,6 @@ class TestObtainAuthToken(TestCase):
         response = self.view(request)
 
         self.assertEqual(token.key, response.data['token'])
-        self.assertEqual('random_text', response.data['token'])
+        self.assertNotEqual('random_text', response.data['token'])
         
         
