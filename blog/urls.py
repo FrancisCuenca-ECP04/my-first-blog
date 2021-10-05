@@ -24,7 +24,8 @@ urlpatterns = [
     path('api/draft/', post_list.drafts.as_view()),
     path('api/post/<int:pk>/', post_list.post_detail.as_view()),
     path('api/comment/', comment.comments.as_view()),
-    path('api/comment/<int:pk>/',comment.comment_detail.as_view())
+    path('api/post/<int:pk>/comments/', comment.comments.as_view()),
+    path('api/comment/detail/<int:pk>/',comment.comment_detail.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

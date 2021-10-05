@@ -1,6 +1,7 @@
 from blog.models import Post
 from blog.serializers import PostSerializer
 from django.http import Http404
+from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -48,13 +49,19 @@ class post_detail(APIView):
 
     def put(self, request, pk, format=None):
         post = self.get_object(pk)
-        serializer = PostSerializer(post, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        if request.user == post.author:
+            serializer = PostSerializer(post, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(data={"message":"You are not authorized to edit this post."}, status=status.HTTP_403_FORBIDDEN)
     def delete(self, request, pk, format=None):
+            
         post = self.get_object(pk)
-        post.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        if request.user == post.author:
+            post.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(data={"message":"You are not authorized to delete this post."}, status=status.HTTP_403_FORBIDDEN)
